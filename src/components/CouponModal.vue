@@ -1,14 +1,26 @@
 <script setup lang="ts">
-import { onMounted, ref, toRef } from 'vue';
-import { format } from 'date-fns';
+import {
+  onMounted, ref, toRef, watchEffect,
+} from 'vue';
 import { Modal } from 'bootstrap';
+import { formatTimeToDate, formatDateToTime } from '../helpers';
 import type { Coupon } from '@/types';
 
 const props = defineProps<{ tempCoupon: Coupon }>();
 const emit = defineEmits(['update-coupon']); // eslint-disable-line
 const couponData = toRef(props, 'tempCoupon');
 const couponModalRef = ref<HTMLDivElement | string>('');
+const dueDate = ref<string>('');
+
 let couponModal: Modal;
+
+watchEffect(() => {
+  couponData.value.due_date = formatDateToTime(dueDate.value);
+});
+
+watchEffect(() => {
+  dueDate.value = formatTimeToDate(couponData.value.due_date || Date.now() / 1e3).replace(/\//ig, '-');
+});
 
 onMounted(() => {
   couponModal = new Modal(couponModalRef.value, {
@@ -70,7 +82,7 @@ defineExpose({ showModal, hideModal });
             <label for="due_date">到期日</label>
             <input
               id="due_date"
-              v-model="couponData.due_date"
+              v-model="dueDate"
               type="date"
               class="form-control"
             />

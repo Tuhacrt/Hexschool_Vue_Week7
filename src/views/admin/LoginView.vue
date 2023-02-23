@@ -21,7 +21,7 @@ const login = async () => {
 
     isLoading.value = false;
     document.cookie = `${VITE_TOKEN}=${token}; expires=${new Date(expired)};`;
-    router.push('/admin');
+    router.push('/admin/products');
   } catch (err: unknown) {
     if (err instanceof AxiosError) alert(err.response?.data.message);
   }

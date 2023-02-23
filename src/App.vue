@@ -4,6 +4,9 @@
 
 <style lang="scss">
 @import './assets/all.scss';
+body {
+  background-color: #F0F2F5;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

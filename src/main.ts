@@ -3,7 +3,7 @@ import { createPinia } from 'pinia';
 
 import 'bootstrap';
 import VueAwesomePaginate from 'vue-awesome-paginate';
-
+import Antd from 'ant-design-vue';
 import { Form, Field, ErrorMessage, defineRule, configure } from 'vee-validate'; // eslint-disable-line
 
 import AllRules from '@vee-validate/rules';
@@ -15,6 +15,7 @@ import 'vue-awesome-paginate/dist/style.css';
 
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/css/index.css';
+import 'ant-design-vue/dist/antd.css';
 
 import Router from './router';
 import App from './App.vue';
@@ -32,6 +33,7 @@ createApp(App)
   .use(createPinia())
   .use(Router)
   .use(Loading)
+  .use(Antd)
   .use(VueAwesomePaginate)
   .component('Form', Form)
   .component('Field', Field)

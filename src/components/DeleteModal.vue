@@ -61,7 +61,11 @@ defineExpose({ showModal, hideModal });
           >
             取消
           </button>
-          <button type="button" class="btn btn-danger" @click="$emit('delete-item')">
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="$emit('delete-item')"
+          >
             確認刪除
           </button>
         </div>

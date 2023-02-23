@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, toRef } from 'vue';
-import { format } from 'date-fns';
 import { Modal } from 'bootstrap';
+import { formatTimeToDate } from '../helpers/index';
 import type { Order } from '@/types';
 
 const props = defineProps<{ tempOrder: Order; isPaid: boolean }>();
@@ -81,21 +81,16 @@ defineExpose({ showModal, hideModal });
                   <tr>
                     <th>下單時間</th>
                     <td>
-                      {{
-                        format(
-                          new Date((orderData?.create_at || 0) * 1e3),
-                          'yyyy/MM/dd',
-                        )
-                      }}
+                      {{ formatTimeToDate(orderData?.create_at) }}
                     </td>
                   </tr>
                   <tr>
                     <th>付款時間</th>
                     <td>
                       <span v-if="orderData?.paid_date">
-                        {{ format(orderData.paid_date, 'yyyy/MM/dd') }}
+                        {{ formatTimeToDate(orderData?.paid_date) }}
                       </span>
-                      <span v-else>時間不正確</span>
+                      <span v-else>尚未付款</span>
                     </td>
                   </tr>
                   <tr>

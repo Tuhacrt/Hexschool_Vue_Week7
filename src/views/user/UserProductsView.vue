@@ -100,7 +100,11 @@ const goToAbout = async (currentProduct: Product) => {
             <td style="width: 200px">
               <div
                 v-if="product.imagesUrl"
-                style="height: 100px; background-size: cover; background-position: center;"
+                style="
+                  height: 100px;
+                  background-size: cover;
+                  background-position: center;
+                "
                 :style="{ backgroundImage: `url(${product?.imagesUrl[0]})` }"
               />
             </td>

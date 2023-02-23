@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref, reactive } from 'vue';
 import axios, { AxiosError } from 'axios';
-import { format } from 'date-fns';
 
 import CouponModal from '../../components/CouponModal.vue';
 import DeleteModal from '../../components/DeleteModal.vue';
 import PaginationComponent from '../../components/PaginationComponent.vue';
+import { formatTimeToDate } from '../../helpers';
 import type { Coupon, Pagination } from '@/types';
 
 const { VITE_URL, VITE_PATH, VITE_TEXT } = import.meta.env;
@@ -53,18 +53,16 @@ const getRequestType = () => {
 
 const updateCoupon = async () => {
   const { method, url } = getRequestType();
-  console.log(method, url);
   state.isLoading = true;
-  console.log(state.tempCoupon);
 
   try {
     await axios[method](url, {
       data: state.tempCoupon,
     });
     couponModalRef.value?.hideModal();
-    // alert(response.data.message);
     getCouponList();
   } catch (err: unknown) {
+    state.isLoading = false;
     if (err instanceof AxiosError) alert(err.response?.data.message);
   }
 };
@@ -83,8 +81,7 @@ const deleteCoupon = async () => {
   }
 };
 
-const deleteAllCoupons = async () => {
-  // eslint-disable-line
+const deleteAllCoupons = async () => { // eslint-disable-line
   const url = `${VITE_URL}/api/${VITE_PATH}/admin/coupons/all`;
   state.isLoading = true;
 
@@ -142,7 +139,7 @@ const openModal = (modalType: string, currentCoupon: Coupon = {} as Coupon) => {
           <td>{{ coupon.title }}</td>
           <td>{{ coupon.percent }}</td>
           <td class="text-end">
-            {{ format(new Date((coupon?.due_date || 0) * 1e3), 'yyyy/MM/dd') }}
+            {{ formatTimeToDate(coupon?.due_date) }}
           </td>
           <td>
             <span :class="{ 'text-success': coupon.is_enabled }">{{

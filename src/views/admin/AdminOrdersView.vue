@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { onMounted, ref, reactive } from 'vue';
 import axios, { AxiosError } from 'axios';
-import { format } from 'date-fns';
 
 import DeleteModal from '../../components/DeleteModal.vue';
 import OrderModal from '../../components/OrderModal.vue';
 import PaginationComponent from '../../components/PaginationComponent.vue';
+import { formatTimeToDate } from '../../helpers/index';
 import type { Order, Pagination } from '@/types';
 
 const { VITE_URL, VITE_PATH } = import.meta.env;
 
 const state = reactive({
   orders: [] as Order[],
-  tempOrder: { create_at: 0, is_paid: false } as Order,
+  tempOrder: { create_at: Date.now(), is_paid: false } as Order,
   pagination: {} as Pagination,
   isLoading: false as boolean,
   isPaid: false as boolean,
@@ -48,7 +48,7 @@ const updatePaid = async (order: Order) => {
   const data = {
     ...state.tempOrder,
     is_paid: order.is_paid,
-    paid_date: order.is_paid ? Date.now() : 0,
+    paid_date: order.is_paid ? Math.floor(Date.now() / 1e3) : 0,
   };
   state.isLoading = true;
 
@@ -122,7 +122,7 @@ const openModal = (modalType: string, currentOrder: Order) => {
       <tbody v-if="state.orders?.length">
         <tr v-for="order in state.orders" :key="order.id">
           <td>
-            {{ format(new Date((order?.create_at || 0) * 1e3), 'yyyy/MM/dd') }}
+            {{ formatTimeToDate(order?.create_at) }}
           </td>
           <td>{{ order.user?.email }}</td>
           <td>
