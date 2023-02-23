@@ -30,6 +30,7 @@ const getProductList = async (
     const response = await axios.get(url);
     state.isLoading = false;
     state.products = response.data.products;
+    console.dir(state.products);
     state.pagination = response.data.pagination;
   } catch (err: unknown) {
     state.isLoading = false;

@@ -34,6 +34,10 @@ const router = createRouter({
           name: '購物車',
           component: () => import('../views/user/UserCartView.vue'),
         },
+        {
+          path: '/:pathMatch(.*)*',
+          component: () => import('../views/NotFound.vue'),
+        },
       ],
     },
 
@@ -62,6 +66,10 @@ const router = createRouter({
         {
           path: 'articles',
           component: () => import('../views/admin/AdminArticlesView.vue'),
+        },
+        {
+          path: ':pathMatch(.*)*',
+          component: () => import('../views/NotFound.vue'),
         },
       ],
     },
