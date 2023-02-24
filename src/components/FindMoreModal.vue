@@ -1,30 +1,20 @@
 <script setup lang="ts">
-import { onMounted, ref, toRef } from 'vue';
-import * as bootstrap from 'bootstrap';
+import { ref, toRef } from 'vue';
+import useModal from '../helpers/useModal';
 import type { Product } from '@/types';
-
-const findMoreModalRef = ref<HTMLDivElement | string>('');
-let findMoreModal: bootstrap.Modal;
-
-onMounted(() => {
-  findMoreModal = new bootstrap.Modal(findMoreModalRef?.value, {
-    keyboard: false,
-    backdrop: false,
-  });
-});
 
 const props = defineProps<{
   tempProduct: Product;
   addToCart:(productId: string, quantity: number) => void; // eslint-disable-line
 }>();
 const productData = toRef(props, 'tempProduct');
+const findMoreModalRef = ref<HTMLDivElement | string>('');
+const { modal, showModal, hideModal } = useModal(findMoreModalRef); // eslint-disable-line
 let quantity = 1;
 
-const showModal = () => {
+const resetQuantity = () => {
   quantity = 1;
-  findMoreModal?.show();
 };
-const hideModal = () => findMoreModal?.hide();
 
 defineExpose({ showModal, hideModal });
 </script>
@@ -90,7 +80,7 @@ defineExpose({ showModal, hideModal });
                   <button
                     type="button"
                     class="btn btn-primary"
-                    @click="addToCart(productData.id, quantity)"
+                    @click="addToCart(productData.id, quantity), resetQuantity()"
                   >
                     加入購物車
                   </button>

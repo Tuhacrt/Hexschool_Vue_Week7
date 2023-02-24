@@ -5,7 +5,7 @@ import axios, { AxiosError } from 'axios';
 import DeleteModal from '../../components/DeleteModal.vue';
 import OrderModal from '../../components/OrderModal.vue';
 import PaginationComponent from '../../components/PaginationComponent.vue';
-import { formatTimeToDate } from '../../helpers/index';
+import { formatTimeToDate } from '../../helpers/useDate';
 import type { Order, Pagination } from '@/types';
 
 const { VITE_URL, VITE_PATH } = import.meta.env;

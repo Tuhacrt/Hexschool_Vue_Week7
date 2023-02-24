@@ -5,7 +5,7 @@ import axios, { AxiosError } from 'axios';
 import CouponModal from '../../components/CouponModal.vue';
 import DeleteModal from '../../components/DeleteModal.vue';
 import PaginationComponent from '../../components/PaginationComponent.vue';
-import { formatTimeToDate } from '../../helpers';
+import { formatTimeToDate } from '../../helpers/useDate';
 import type { Coupon, Pagination } from '@/types';
 
 const { VITE_URL, VITE_PATH, VITE_TEXT } = import.meta.env;

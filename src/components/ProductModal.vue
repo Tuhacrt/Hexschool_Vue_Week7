@@ -1,27 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref, toRef } from 'vue';
-import { Modal } from 'bootstrap';
+import { ref, toRef } from 'vue';
+import useModal from '../helpers/useModal';
 import type { Product } from '@/types';
 
 const props = defineProps<{ tempProduct: Product; isNew: boolean }>();
 const emit = defineEmits(['update-product']); // eslint-disable-line
 const productData = toRef(props, 'tempProduct');
 const productModalRef = ref<HTMLDivElement | string>('');
-let productModal: Modal;
-
-onMounted(() => {
-  productModal = new Modal(productModalRef.value, {
-    keyboard: false,
-    backdrop: false,
-  });
-});
+const { modal, showModal, hideModal } = useModal(productModalRef); // eslint-disable-line
 
 const initializeProductImages = () => {
   productData.value.imagesUrl = [''];
 };
-
-const showModal = () => productModal?.show();
-const hideModal = () => productModal?.hide();
 
 defineExpose({ showModal, hideModal });
 </script>

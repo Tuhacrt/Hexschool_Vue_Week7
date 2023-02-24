@@ -1,40 +1,26 @@
 <script setup lang="ts">
 import {
-  onMounted, ref, toRef, watchEffect, computed,
+  ref, toRef, computed, watch,
 } from 'vue';
-import { Modal } from 'bootstrap';
-import { formatTimeToDate, formatDateToTime } from '../helpers';
+import { formatTimeToDate, formatDateToTime } from '../helpers/useDate';
+import useModal from '../helpers/useModal';
 import type { Coupon } from '@/types';
 
 const props = defineProps<{ tempCoupon: Coupon }>();
 const emit = defineEmits(['update-coupon']); // eslint-disable-line
 const couponData = toRef(props, 'tempCoupon');
 const couponModalRef = ref<HTMLDivElement | string>('');
+const { modal, showModal, hideModal } = useModal(couponModalRef); // eslint-disable-line
 const dueDate = ref<string>('');
 const minDate = computed(() => formatTimeToDate(Date.now() / 1e3, '-'));
 
-let couponModal: Modal;
-
-watchEffect(() => {
-  couponData.value.due_date = formatDateToTime(dueDate.value);
+watch(dueDate, (newVal) => {
+  couponData.value.due_date = formatDateToTime(newVal);
 });
 
-watchEffect(() => {
-  dueDate.value = formatTimeToDate(
-    couponData.value.due_date || Date.now() / 1e3,
-    '-',
-  );
-});
-
-onMounted(() => {
-  couponModal = new Modal(couponModalRef.value, {
-    keyboard: false,
-    backdrop: false,
-  });
-});
-
-const showModal = () => couponModal?.show();
-const hideModal = () => couponModal?.hide();
+watch(couponData, (newVal) => {
+  dueDate.value = formatTimeToDate(newVal.due_date || Date.now() / 1e3, '-');
+}, { immediate: true });
 
 defineExpose({ showModal, hideModal });
 </script>

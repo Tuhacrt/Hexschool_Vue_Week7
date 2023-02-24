@@ -1,22 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { Modal } from 'bootstrap';
+import { ref } from 'vue';
+import useModal from '../helpers/useModal';
 import type { Product, Order, Coupon } from '@/types';
 
 const props = defineProps<{ deleteItem: Product | Order | Coupon }>(); // eslint-disable-line
 const emit = defineEmits(['delete-item']); // eslint-disable-line
 const deleteProductModalRef = ref<HTMLDivElement | string>('');
-let deleteProductModal: Modal;
-
-onMounted(() => {
-  deleteProductModal = new Modal(deleteProductModalRef.value, {
-    keyboard: false,
-    backdrop: false,
-  });
-});
-
-const showModal = () => deleteProductModal?.show();
-const hideModal = () => deleteProductModal?.hide();
+const { modal, showModal, hideModal } = useModal(deleteProductModalRef); // eslint-disable-line
 
 defineExpose({ showModal, hideModal });
 </script>

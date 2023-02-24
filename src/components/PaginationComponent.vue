@@ -3,8 +3,7 @@ import { ref, toRef, computed } from 'vue';
 import type { Pagination } from '@/types';
 
 const props = defineProps<{ pagination: Pagination }>();
-const emit = defineEmits(['changePage']);
-
+const emit = defineEmits(['change-page']);
 const paginationComponentRef = ref<HTMLDivElement | string>('');
 const localPagination = toRef(props, 'pagination');
 const totalItems = computed<number>(
@@ -13,7 +12,7 @@ const totalItems = computed<number>(
 const currentPage = ref<number>(1);
 
 const onClickPage = (page: number) => {
-  emit('changePage', page);
+  emit('change-page', page);
 };
 </script>
 

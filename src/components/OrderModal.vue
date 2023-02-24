@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import { onMounted, ref, toRef } from 'vue';
-import { Modal } from 'bootstrap';
-import { formatTimeToDate } from '../helpers/index';
+import { ref, toRef } from 'vue';
+import { formatTimeToDate } from '../helpers/useDate';
+import useModal from '../helpers/useModal';
 import type { Order } from '@/types';
 
 const props = defineProps<{ tempOrder: Order; isPaid: boolean }>();
 const emit = defineEmits(['update-paid']); // eslint-disable-line
 const orderData = toRef(props, 'tempOrder');
 const orderModalRef = ref<HTMLDivElement | string>('');
-let orderModal: Modal;
-
-onMounted(() => {
-  orderModal = new Modal(orderModalRef.value, {
-    keyboard: false,
-    backdrop: false,
-  });
-});
-
-const showModal = () => orderModal?.show();
-const hideModal = () => orderModal?.hide();
+const { modal, showModal, hideModal } = useModal(orderModalRef); // eslint-disable-line
 
 defineExpose({ showModal, hideModal });
 </script>
