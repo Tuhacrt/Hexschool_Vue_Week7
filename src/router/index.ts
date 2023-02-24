@@ -1,14 +1,14 @@
 import axios, { AxiosError } from 'axios';
 import {
   createRouter,
-  createWebHistory,
+  createWebHashHistory,
   type NavigationGuardNext,
 } from 'vue-router';
 
 const { VITE_URL, VITE_TOKEN } = import.meta.env;
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
