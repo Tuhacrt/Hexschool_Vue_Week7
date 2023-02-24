@@ -29,6 +29,7 @@ const getCart = async () => {
     state.isLoading = false;
     state.cart = response.data.data;
   } catch (err: unknown) {
+    state.isLoading = false;
     if (err instanceof AxiosError) alert(err.response?.data.message);
   }
 };
@@ -72,6 +73,7 @@ const deleteCartItem = async (productId: string) => {
     alert(response.data.message);
     getCart();
   } catch (err: unknown) {
+    state.isLoading = false;
     if (err instanceof AxiosError) alert(err.response?.data.message);
   }
 };
@@ -83,11 +85,11 @@ const createOrder = async () => {
 
   try {
     const response = await axios.post(url, { data });
-    state.isLoading = false;
     formRef.value?.resetForm();
     alert(response.data.message);
     getCart();
   } catch (err: unknown) {
+    state.isLoading = false;
     if (err instanceof AxiosError) alert(err.response?.data.message);
   }
 };

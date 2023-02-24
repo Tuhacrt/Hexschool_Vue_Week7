@@ -81,7 +81,8 @@ const deleteCoupon = async () => {
   }
 };
 
-const deleteAllCoupons = async () => { // eslint-disable-line
+/*eslint-disable */
+const deleteAllCoupons = async () => {
   const url = `${VITE_URL}/api/${VITE_PATH}/admin/coupons/all`;
   state.isLoading = true;
 
@@ -93,11 +94,12 @@ const deleteAllCoupons = async () => { // eslint-disable-line
     if (err instanceof AxiosError) alert(err.response?.data.message);
   }
 };
+/*eslint-disable*/
 
 const openModal = (modalType: string, currentCoupon: Coupon = {} as Coupon) => {
   switch (modalType) {
     case 'new':
-      state.tempCoupon = {} as Coupon;
+      state.tempCoupon = { is_enabled: 0 } as Coupon;
       state.isNew = true;
       couponModalRef.value?.showModal();
       break;

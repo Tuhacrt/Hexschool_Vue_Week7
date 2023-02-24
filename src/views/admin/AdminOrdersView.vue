@@ -76,7 +76,8 @@ const deleteOrder = async () => {
   }
 };
 
-const deleteAllOrders = async () => { // eslint-disable-line
+/*eslint-disable*/
+const deleteAllOrders = async () => {
   const url = `${VITE_URL}/api/${VITE_PATH}/admin/orders/all`;
   state.isLoading = true;
 
@@ -88,6 +89,7 @@ const deleteAllOrders = async () => { // eslint-disable-line
     if (err instanceof AxiosError) alert(err.response?.data.message);
   }
 };
+/*eslint-disable*/
 
 const openModal = (modalType: string, currentOrder: Order) => {
   switch (modalType) {

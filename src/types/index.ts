@@ -37,15 +37,6 @@ export interface UserForm {
   message: string;
 }
 
-// export interface UserCoupon {
-//   id: string;
-//   title: string;
-//   is_enabled: number;
-//   percent: number;
-//   code: string;
-//   due_date: number;
-// }
-
 export interface Coupon {
   id: string;
   title: string;

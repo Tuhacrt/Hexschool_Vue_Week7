@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {
-  onMounted, ref, toRef, watchEffect,
+  onMounted, ref, toRef, watchEffect, computed,
 } from 'vue';
 import { Modal } from 'bootstrap';
 import { formatTimeToDate, formatDateToTime } from '../helpers';
@@ -11,6 +11,7 @@ const emit = defineEmits(['update-coupon']); // eslint-disable-line
 const couponData = toRef(props, 'tempCoupon');
 const couponModalRef = ref<HTMLDivElement | string>('');
 const dueDate = ref<string>('');
+const minDate = computed(() => formatTimeToDate(Date.now() / 1e3, '-'));
 
 let couponModal: Modal;
 
@@ -19,7 +20,10 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
-  dueDate.value = formatTimeToDate(couponData.value.due_date || Date.now() / 1e3).replace(/\//ig, '-');
+  dueDate.value = formatTimeToDate(
+    couponData.value.due_date || Date.now() / 1e3,
+    '-',
+  );
 });
 
 onMounted(() => {
@@ -83,6 +87,7 @@ defineExpose({ showModal, hideModal });
             <input
               id="due_date"
               v-model="dueDate"
+              :min="minDate"
               type="date"
               class="form-control"
             />

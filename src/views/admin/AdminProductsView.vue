@@ -30,7 +30,6 @@ const getProductList = async (
     const response = await axios.get(url);
     state.isLoading = false;
     state.products = response.data.products;
-    console.dir(state.products);
     state.pagination = response.data.pagination;
   } catch (err: unknown) {
     state.isLoading = false;
@@ -42,7 +41,7 @@ onMounted(() => {
   getProductList();
 });
 
-const getRequestType = () => {
+const getRequestType = (): { method: 'post' | 'put'; url: string } => {
   const baseURL = `${VITE_URL}/api/${VITE_PATH}/admin/product`;
   const url: string = state.isNew
     ? baseURL

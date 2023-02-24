@@ -6,7 +6,7 @@ import AdminNavbar from '../../components/AdminNavbar.vue';
   <a-layout has-sider>
     <AdminNavbar />
     <a-layout :style="{ marginLeft: '200px' }">
-      <a-layout-content>
+      <a-layout-content data-theme="light">
         <router-view></router-view>
       </a-layout-content>
     </a-layout>
